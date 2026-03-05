@@ -6,16 +6,16 @@ import java.util.Scanner;
 
 public class Main {
 
+    static Scanner scanner = new Scanner(System.in);
     static List<String> estudiantes = new ArrayList<>();
     static List<Double> calificaciones = new ArrayList<>();
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("Bienvenido al sistema de gestión de estudiantes.");
 
         while (true) {
+
             System.out.println("\n1. Agregar estudiante");
             System.out.println("2. Mostrar lista de estudiantes");
             System.out.println("3. Calcular promedio de calificaciones");
@@ -23,79 +23,124 @@ public class Main {
             System.out.println("5. Salir");
             System.out.print("Seleccione una opción: ");
 
-            int opcion = Integer.parseInt(scanner.nextLine());
+            int opcion;
+
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Debe ingresar un número válido.");
+                continue;
+            }
 
             if (opcion == 1) {
-
-                System.out.print("Ingrese el nombre del estudiante: ");
-                String nombre = scanner.nextLine();
-
-                System.out.print("Ingrese la calificación del estudiante: ");
-                double calificacion = Double.parseDouble(scanner.nextLine());
-
-                estudiantes.add(nombre);
-                calificaciones.add(calificacion);
-
-                System.out.println("Estudiante agregado correctamente.");
-
+                agregarEstudiante();
             } else if (opcion == 2) {
-
-                if (estudiantes.isEmpty()) {
-                    System.out.println("No hay estudiantes registrados.");
-                } else {
-                    System.out.println("\nLista de estudiantes:");
-                    for (int i = 0; i < estudiantes.size(); i++) {
-                        System.out.println(estudiantes.get(i) +
-                                " - Calificación: " + calificaciones.get(i));
-                    }
-                }
-
+                mostrarEstudiante();
             } else if (opcion == 3) {
-
-                if (calificaciones.isEmpty()) {
-                    System.out.println("No hay calificaciones registradas.");
-                } else {
-                    double suma = 0;
-
-                    for (double calificacion : calificaciones) {
-                        suma += calificacion;
-                    }
-
-                    double promedio = suma / calificaciones.size();
-                    System.out.println("El promedio de calificaciones es: " + promedio);
-                }
-
+                promCalificaciones();
             } else if (opcion == 4) {
-
-                if (calificaciones.isEmpty()) {
-                    System.out.println("No hay calificaciones registradas.");
-                } else {
-
-                    double maxCalificacion = calificaciones.get(0);
-                    String estudianteMax = estudiantes.get(0);
-
-                    for (int i = 1; i < calificaciones.size(); i++) {
-                        if (calificaciones.get(i) > maxCalificacion) {
-                            maxCalificacion = calificaciones.get(i);
-                            estudianteMax = estudiantes.get(i);
-                        }
-                    }
-
-                    System.out.println("El estudiante con la calificación más alta es: "
-                            + estudianteMax + " con " + maxCalificacion);
-                }
-
+                maxCalificacion();
             } else if (opcion == 5) {
-
-                System.out.println("Saliendo del sistema...");
+                salir();
                 break;
-
             } else {
-
                 System.out.println("Opción no válida. Intente de nuevo.");
             }
         }
 
         scanner.close();
     }
+
+    // MÉTODO 1
+    public static void agregarEstudiante() {
+
+        System.out.print("Ingrese el nombre del estudiante: ");
+        String nombre = scanner.nextLine();
+
+        double calificacion;
+
+        while (true) {
+            System.out.print("Ingrese la calificación del estudiante (0 a 100): ");
+            try {
+                calificacion = Double.parseDouble(scanner.nextLine());
+
+                if (calificacion >= 0 && calificacion <= 100) {
+                    break;
+                } else {
+                    System.out.println("La calificación debe estar entre 0 y 100.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Ingrese un número válido.");
+            }
+        }
+
+        estudiantes.add(nombre);
+        calificaciones.add(calificacion);
+
+        System.out.println("Estudiante agregado correctamente.");
+    }
+
+    // MÉTODO 2
+    public static void mostrarEstudiante() {
+
+        if (estudiantes.isEmpty()) {
+            System.out.println("No hay estudiantes registrados.");
+        } else {
+            System.out.println("\nLista de estudiantes:");
+            for (int i = 0; i < estudiantes.size(); i++) {
+                System.out.println(estudiantes.get(i) +
+                        " - Calificación: " + calificaciones.get(i));
+            }
+        }
+    }
+
+    // MÉTODO 3
+    public static void promCalificaciones() {
+
+        if (calificaciones.isEmpty()) {
+            System.out.println("No hay calificaciones registradas.");
+        } else {
+
+            double suma = 0;
+
+            for (double calificacion : calificaciones) {
+                suma += calificacion;
+            }
+
+            double promedio = suma / calificaciones.size();
+
+            System.out.println("El promedio de calificaciones es: " + promedio);
+        }
+    }
+
+    // MÉTODO 4
+    public static void maxCalificacion() {
+
+        if (calificaciones.isEmpty()) {
+            System.out.println("No hay calificaciones registradas.");
+        } else {
+
+            double maxCalificacion = calificaciones.get(0);
+            String estudianteMax = estudiantes.get(0);
+
+            for (int i = 1; i < calificaciones.size(); i++) {
+                if (calificaciones.get(i) > maxCalificacion) {
+                    maxCalificacion = calificaciones.get(i);
+                    estudianteMax = estudiantes.get(i);
+                }
+            }
+
+            System.out.println("El estudiante con la calificación más alta es: "
+                    + estudianteMax + " con " + maxCalificacion);
+        }
+    }
+
+    // MÉTODO SALIR
+    public static void salir() {
+        System.out.println("Saliendo del sistema...");
+    }
 }
+
+
+   
