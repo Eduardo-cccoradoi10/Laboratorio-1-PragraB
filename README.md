@@ -212,12 +212,16 @@ Claridad: el programa se ve más limpio y estético a la vez que facilita su com
 Reflexionar sobre:
 
 - Posibilidad de errores inesperados: las variables globales al estar en funcion durante toda la ejecución del programa un cambio que no concuerde con sus parametros como por ejemplo una operacióm matematica invalida puede afectar a todo nuestro programa.
-- Dificultad para depurar
-- Dependencia entre métodos
+
+- Dificultad para depurar: puede que al momento de ingresar una cantidad o inicializar una variable que sea global se nos dificulte porque dicha variable tiene que estar cumpliendo todos los parametros que coloquemos en el programa o dichos metodos.
+
+- Dependencia entre métodos: la dependencia entre metodos es importante ya que hay metodos que dependen de listas para guardar los datos.
 
 ---
 
 ## 3️⃣ ¿Cómo mejora la modularización la legibilidad del código?
+
+Debido a que cada método identifica bien en su nombre su función o la operación a realizarse esto facilita su lectura y comprensión así también el implementar mejoras o actualizaciones en los procesos empleados que hacemos dentro del main.
 
 ---
 
